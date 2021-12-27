@@ -7,7 +7,6 @@ SIZE = 25
 
 PLANT_MASS  = 1800
 RABBIT_MASS = 5000
-FOX_MASS    = 10000
 
 
 def move(field_alive, field_dead, position, position_to_move, type_org):
@@ -188,14 +187,20 @@ field_alive[11][11] = ["P", PLANT_MASS]
 field_alive[11][12] = ["P", PLANT_MASS]
 field_alive[12][12] = ["P", PLANT_MASS]
 
-while(True):
+num_of_orgs = 23
+iteration = 0
+while (num_of_orgs > 0):
 	time.sleep(1)
 
 	show_field(field_alive)
+	num_of_orgs = 0
+	iteration += 1
+	print(f'\n\nIteration {iteration}')
 
 	for i in range(SIZE):
 		for j in range(SIZE):
 			if field_alive[i][j][0] == "R":
+				num_of_orgs += 1
 				if field_alive[i][j][1] >= 0.6 * RABBIT_MASS and clear_position_near(field_alive, (i,j)):
 					field_alive, field_dead = copy(field_alive, field_dead, (i,j), clear_position_near(field_alive, (i,j)))
 				else:
@@ -214,6 +219,7 @@ while(True):
 	for i in range(SIZE):
 		for j in range(SIZE):
 			if field_alive[i][j][0] == "P":
+				num_of_orgs += 1
 				if field_alive[i][j][1] >= 0.6 * PLANT_MASS and clear_position_near(field_alive, (i,j)):
 					field_alive, field_dead = copy(field_alive, field_dead, (i,j), clear_position_near(field_alive, (i,j)))
 				else:
